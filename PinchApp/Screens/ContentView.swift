@@ -11,6 +11,14 @@ struct ContentView: View {
     //MARK: - PROPERTIES
     @State var isAnimating = false
     @State var imageScale: CGFloat = 1
+    @State var imageOffset: CGSize = CGSize()
+    
+    func resetImageState(){
+        return withAnimation(.spring()){
+            imageScale = 1
+            imageOffset = .zero
+        }
+    }
     
     //MARK: - FUNCTION
     
@@ -19,6 +27,7 @@ struct ContentView: View {
         
         NavigationView{
             ZStack{
+                Color.clear
                 
                 //MARK: - PAGE IMAGE
                 Image("magazine-front-cover")
@@ -29,6 +38,7 @@ struct ContentView: View {
                     .shadow(color: .black, radius: 10, x: 2, y: 2)
                     .opacity(isAnimating ? 1 : 0)
                     .scaleEffect(imageScale)
+                    .offset(imageOffset)
                     .onTapGesture(count: 2, perform: {
                         withAnimation(.spring()) {
                             
@@ -36,10 +46,26 @@ struct ContentView: View {
                                 imageScale = 5
                             }
                             else {
-                                imageScale = 1
+                                resetImageState()
                             }
                         }
                     })
+                
+                //MARK: - DRAG GESTURE
+                    .gesture(
+                        DragGesture()
+                            .onChanged{ value in
+                                withAnimation(.linear(duration: 1)){
+                                    imageOffset = value.translation
+                                }
+                            }
+                        
+                            .onEnded{_ in
+                                if imageScale <= 1{
+                                    resetImageState()
+                                }
+                            }
+                    )
                 
             }
             .navigationTitle("Pinch & Zoom")
@@ -49,6 +75,13 @@ struct ContentView: View {
                     isAnimating = true
                 }
             }
+            //MARK: - INFO PANEL
+             .overlay(
+                InfoPanelView(scale: imageScale, offset: imageOffset)
+                    .padding(.horizontal)
+                    .padding(.top, 30)
+                , alignment: .top
+            )
             
         }//: NAVIGATION
         .navigationViewStyle(.columns)
