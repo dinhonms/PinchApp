@@ -11,6 +11,7 @@
 		771365402A669C1E00FB032B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7713653F2A669C1E00FB032B /* ContentView.swift */; };
 		771365422A669C2100FB032B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 771365412A669C2100FB032B /* Assets.xcassets */; };
 		771365452A669C2100FB032B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 771365442A669C2100FB032B /* Preview Assets.xcassets */; };
+		77914C202A70789700A98E65 /* ControlImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77914C1F2A70789700A98E65 /* ControlImageView.swift */; };
 		7A29A6682A6DA19F0045CEB4 /* InfoPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A29A6672A6DA19F0045CEB4 /* InfoPanelView.swift */; };
 /* End PBXBuildFile section */
 
@@ -20,6 +21,7 @@
 		7713653F2A669C1E00FB032B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		771365412A669C2100FB032B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		771365442A669C2100FB032B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		77914C1F2A70789700A98E65 /* ControlImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlImageView.swift; sourceTree = "<group>"; };
 		7A29A6672A6DA19F0045CEB4 /* InfoPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InfoPanelView.swift; path = PinchApp/Views/InfoPanelView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -98,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				7A29A6672A6DA19F0045CEB4 /* InfoPanelView.swift */,
+				77914C1F2A70789700A98E65 /* ControlImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -172,6 +175,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77914C202A70789700A98E65 /* ControlImageView.swift in Sources */,
 				771365402A669C1E00FB032B /* ContentView.swift in Sources */,
 				7713653E2A669C1E00FB032B /* PinchAppApp.swift in Sources */,
 				7A29A6682A6DA19F0045CEB4 /* InfoPanelView.swift in Sources */,

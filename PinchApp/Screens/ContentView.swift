@@ -13,10 +13,37 @@ struct ContentView: View {
     @State var imageScale: CGFloat = 1
     @State var imageOffset: CGSize = CGSize()
     
+    var maxScale: CGFloat = 5
+    var minScale: CGFloat = 1
+    
     func resetImageState(){
         return withAnimation(.spring()){
-            imageScale = 1
+            imageScale = minScale
             imageOffset = .zero
+        }
+    }
+    
+    func scaleUp(){
+        return withAnimation(.spring()){
+            if imageScale < maxScale{
+                imageScale += 1
+            }
+            
+            if imageScale > maxScale{
+                imageScale = maxScale
+            }
+        }
+    }
+    
+    func scaleDown(){
+        return withAnimation(.spring()){
+            if imageScale > minScale{
+                imageScale -= 1
+            }
+            
+            if imageScale < minScale{
+                imageScale = minScale
+            }
         }
     }
     
@@ -42,8 +69,8 @@ struct ContentView: View {
                     .onTapGesture(count: 2, perform: {
                         withAnimation(.spring()) {
                             
-                            if imageScale == 1{
-                                imageScale = 5
+                            if imageScale == minScale{
+                                imageScale = maxScale
                             }
                             else {
                                 resetImageState()
@@ -82,7 +109,36 @@ struct ContentView: View {
                     .padding(.top, 30)
                 , alignment: .top
             )
-            
+            //MARK: - CONTROLS
+             .overlay (
+                 Group{
+                     HStack{
+                         Button {
+                             scaleDown()
+                         } label: {
+                             ControlImageView(iconName: "minus.magnifyingglass")
+                         }
+                         
+                         Button {
+                             resetImageState()
+                         } label: {
+                             ControlImageView(iconName: "arrow.up.left.and.down.right.magnifyingglass")
+                         }
+                         
+                         Button {
+                             scaleUp()
+                         } label: {
+                             ControlImageView(iconName: "plus.magnifyingglass")
+                         }
+                     }
+                     .padding(15)
+                     .cornerRadius(12)
+                     .opacity(isAnimating ? 1 : 0)
+                     .backgroundStyle(.ultraThinMaterial)
+                 }
+                 .padding(.bottom, 30)
+                 ,alignment: .bottom
+             )
         }//: NAVIGATION
         .navigationViewStyle(.columns)
     }
