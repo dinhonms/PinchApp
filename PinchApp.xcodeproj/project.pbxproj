@@ -11,6 +11,7 @@
 		771365402A669C1E00FB032B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7713653F2A669C1E00FB032B /* ContentView.swift */; };
 		771365422A669C2100FB032B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 771365412A669C2100FB032B /* Assets.xcassets */; };
 		771365452A669C2100FB032B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 771365442A669C2100FB032B /* Preview Assets.xcassets */; };
+		7A29A6682A6DA19F0045CEB4 /* InfoPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A29A6672A6DA19F0045CEB4 /* InfoPanelView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		7713653F2A669C1E00FB032B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		771365412A669C2100FB032B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		771365442A669C2100FB032B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7A29A6672A6DA19F0045CEB4 /* InfoPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InfoPanelView.swift; path = PinchApp/Views/InfoPanelView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,9 +53,9 @@
 		7713653C2A669C1E00FB032B /* PinchApp */ = {
 			isa = PBXGroup;
 			children = (
+				7A16D54D2A70773700AA26FA /* Views */,
 				779EBBC62A669DAE007811BB /* Models */,
 				779EBBC52A669DA8007811BB /* Data */,
-				779EBBC42A669DA1007811BB /* Views */,
 				7713653D2A669C1E00FB032B /* PinchAppApp.swift */,
 				779EBBC32A669D92007811BB /* Screens */,
 				771365412A669C2100FB032B /* Assets.xcassets */,
@@ -78,13 +80,6 @@
 			path = Screens;
 			sourceTree = "<group>";
 		};
-		779EBBC42A669DA1007811BB /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		779EBBC52A669DA8007811BB /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +92,14 @@
 			children = (
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		7A16D54D2A70773700AA26FA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7A29A6672A6DA19F0045CEB4 /* InfoPanelView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,6 +174,7 @@
 			files = (
 				771365402A669C1E00FB032B /* ContentView.swift in Sources */,
 				7713653E2A669C1E00FB032B /* PinchAppApp.swift in Sources */,
+				7A29A6682A6DA19F0045CEB4 /* InfoPanelView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
