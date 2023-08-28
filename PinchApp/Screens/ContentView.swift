@@ -12,14 +12,16 @@ struct ContentView: View {
     @State var isAnimating = false
     @State var imageScale: CGFloat = 1
     @State var imageOffset: CGSize = CGSize()
+    @State var lastOffset: CGSize = CGSize()
     
     var maxScale: CGFloat = 5
     var minScale: CGFloat = 1
     
     func resetImageState(){
         return withAnimation(.spring()){
-            imageScale = minScale
+            setScale(newScale: minScale)
             imageOffset = .zero
+            lastOffset = imageOffset
         }
     }
     
@@ -47,6 +49,10 @@ struct ContentView: View {
         }
     }
     
+    func setScale(newScale: CGFloat){
+        imageScale = newScale
+    }
+    
     //MARK: - FUNCTION
     
     //MARK: - CONTENT
@@ -70,7 +76,7 @@ struct ContentView: View {
                         withAnimation(.spring()) {
                             
                             if imageScale == minScale{
-                                imageScale = maxScale
+                                setScale(newScale: maxScale)
                             }
                             else {
                                 resetImageState()
@@ -83,12 +89,34 @@ struct ContentView: View {
                         DragGesture()
                             .onChanged{ value in
                                 withAnimation(.linear(duration: 1)){
-                                    imageOffset = value.translation
+                                    imageOffset = CGSize(width: value.translation.width + lastOffset.width, height: value.translation.height + lastOffset.height)
                                 }
                             }
                         
                             .onEnded{_ in
                                 if imageScale <= 1{
+                                    resetImageState()
+                                }
+                                
+                                lastOffset = imageOffset
+                            }
+                    )
+                //MARK: - Magnification gesture
+                    .gesture(
+                        MagnificationGesture()
+                            .onChanged{ value in
+                                withAnimation(.linear(duration: 1)){
+                                    if imageScale >= 1 && imageScale <= 5 {
+                                        setScale(newScale: value)
+                                    } else if imageScale > 5 {
+                                        setScale(newScale: 5)
+                                    }
+                                }
+                            }
+                            .onEnded{_ in
+                                if imageScale > 5 {
+                                    setScale(newScale: 5)
+                                } else if imageScale <= 1 {
                                     resetImageState()
                                 }
                             }
@@ -103,42 +131,43 @@ struct ContentView: View {
                 }
             }
             //MARK: - INFO PANEL
-             .overlay(
-                InfoPanelView(scale: imageScale, offset: imageOffset)
+            .overlay(
+                InfoPanelView(scale: $imageScale, offset: $imageOffset)
                     .padding(.horizontal)
                     .padding(.top, 30)
                 , alignment: .top
             )
             //MARK: - CONTROLS
-             .overlay (
-                 Group{
-                     HStack{
-                         Button {
-                             scaleDown()
-                         } label: {
-                             ControlImageView(iconName: "minus.magnifyingglass")
-                         }
-                         
-                         Button {
-                             resetImageState()
-                         } label: {
-                             ControlImageView(iconName: "arrow.up.left.and.down.right.magnifyingglass")
-                         }
-                         
-                         Button {
-                             scaleUp()
-                         } label: {
-                             ControlImageView(iconName: "plus.magnifyingglass")
-                         }
-                     }
-                     .padding(15)
-                     .cornerRadius(12)
-                     .opacity(isAnimating ? 1 : 0)
-                     .backgroundStyle(.ultraThinMaterial)
-                 }
-                 .padding(.bottom, 30)
-                 ,alignment: .bottom
-             )
+            .overlay (
+                Group{
+                    HStack{
+                        Button {
+                            scaleDown()
+                        } label: {
+                            ControlImageView(iconName: "minus.magnifyingglass")
+                        }
+                        
+                        Button {
+                            resetImageState()
+                        } label: {
+                            ControlImageView(iconName: "arrow.up.left.and.down.right.magnifyingglass")
+                        }
+                        
+                        Button {
+                            scaleUp()
+                        } label: {
+                            ControlImageView(iconName: "plus.magnifyingglass")
+                        }
+                    }
+                    .padding(.horizontal, 22.0)
+                    .padding(.vertical, 8.0)
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(12)
+                    .opacity(isAnimating ? 1 : 0)
+                }
+                    .padding(.bottom, 30)
+                ,alignment: .bottom
+            )
         }//: NAVIGATION
         .navigationViewStyle(.columns)
     }
