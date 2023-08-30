@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct ContentView: View {
     //MARK: - PROPERTIES
@@ -13,6 +14,10 @@ struct ContentView: View {
     @State var imageScale: CGFloat = 1
     @State var imageOffset: CGSize = CGSize()
     @State var lastOffset: CGSize = CGSize()
+    @State private var isImageChooserOpen = false
+    @State private var chosenMagazine = "magazine-front-cover"
+    @State private var frontMagazine = "magazine-front-cover"
+    @State private var backMagazine = "magazine-back-cover"
     
     var maxScale: CGFloat = 5
     var minScale: CGFloat = 1
@@ -53,6 +58,18 @@ struct ContentView: View {
         imageScale = newScale
     }
     
+    func setChosenMagazine(chosenMagazine: String){
+        self.chosenMagazine = chosenMagazine
+    }
+    
+    func createThumbnail() async -> UIImage{
+        let image = UIImage(contentsOfFile: frontMagazine)
+        
+        let thumbnail = image?.preparingThumbnail(of: CGSize(width: 256, height: 256)) ?? UIImage()
+        
+        return thumbnail
+    }
+    
     //MARK: - FUNCTION
     
     //MARK: - CONTENT
@@ -63,7 +80,7 @@ struct ContentView: View {
                 Color.clear
                 
                 //MARK: - PAGE IMAGE
-                Image("magazine-front-cover")
+                Image(chosenMagazine)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .cornerRadius(10)
@@ -167,6 +184,57 @@ struct ContentView: View {
                 }
                     .padding(.bottom, 30)
                 ,alignment: .bottom
+            )
+            //MARK: - CHOOSE MAGAZINE
+            .overlay(
+                HStack(spacing: 10.0) {
+                    Image(systemName: isImageChooserOpen ? "chevron.compact.right" : "chevron.compact.left")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(.secondary)
+                        .frame(height: 50)
+                        .onTapGesture(perform:  {
+                            withAnimation(.easeOut){
+                                isImageChooserOpen.toggle()
+                            }
+                        })
+                    
+                    Image("thumb-magazine-front-cover")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(10)
+                        .opacity(isImageChooserOpen ? 1 : 0)
+                        .animation(.easeOut(duration: 0.5), value: isImageChooserOpen)
+                        .onTapGesture(perform: {
+                            withAnimation(.easeOut){
+                                setChosenMagazine(chosenMagazine: frontMagazine)
+                            }
+                        })
+                    
+                    Image("thumb-magazine-back-cover")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(10)
+                        .opacity(isImageChooserOpen ? 1 : 0)
+                        .animation(.easeOut(duration: 0.5), value: isImageChooserOpen)
+                        .onTapGesture(perform: {
+                            withAnimation(.easeOut){
+                                setChosenMagazine(chosenMagazine: backMagazine)
+                            }
+                        })
+                    
+                    Spacer()
+                }
+                    .padding(.all, 10.0)
+                    .frame(width: UIScreen.main.bounds.width / 2.2, height: 100)
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(12)
+                    .opacity(isAnimating ? 1 : 0)
+                    .padding(.top, UIScreen.main.bounds.height / 12)
+                    .offset(x: isImageChooserOpen ? 20 : UIScreen.main.bounds.width - 269)
+                
+                
+                ,alignment: .topTrailing
             )
         }//: NAVIGATION
         .navigationViewStyle(.columns)
