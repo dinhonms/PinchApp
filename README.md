@@ -1,6 +1,6 @@
 # Pinch App
 
->A complete App developed in SwiftUI from a learning class in this [course](https://www.udemy.com/course/swiftui-masterclass-course-ios-development-with-swift/). Find the beauty of Africa
+>A complete App developed in SwiftUI from a learning class in this [course](https://www.udemy.com/course/swiftui-masterclass-course-ios-development-with-swift/).
 
 ### Screenshots
 <img src="https://github.com/dinhonms/PinchApp/assets/25248564/e8498a77-69e3-4a8e-8b6f-105ce1d3c68a" width="300" height="649">
